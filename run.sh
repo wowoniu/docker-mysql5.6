@@ -5,14 +5,18 @@ set -e
 
 VOLUME_HOME="/var/lib/mysql"
 CONF_FILE="/etc/mysql/conf.d/my.cnf"
-CONF_EXTEND_DIR="/etc/mysql/conf.d/*"
+CONF_EXTEND_DIR="/mysql_extend_conf/"
 LOG="/var/log/mysql/error.log"
 
 
 # Set permission of config file
 chmod 644 ${CONF_FILE}
 #chmod 644 /etc/mysql/conf.d/mysqld_charset.cnf
-chmod -R 644 ${CONF_EXTEND_DIR}
+
+if [ -d ${CONF_EXTEND_DIR} ]; then
+      cp -r ${CONF_EXTEND_DIR} /etc/mysql/conf.d
+      chmod -R 644 ${CONF_EXTEND_DIR}
+fi
 
 StartMySQL ()
 {
